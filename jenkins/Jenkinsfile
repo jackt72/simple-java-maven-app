@@ -5,9 +5,6 @@ pipeline {
             args '-v /root/.m2:/root/.m2'
         }
     }
-    tools {
-        maven 'mvn-3.5.2'
-    }
     environment {
         DOCKER_IMAGE_TAG = "my-app-challenge:build-${env.BUILD_ID}"
     }
