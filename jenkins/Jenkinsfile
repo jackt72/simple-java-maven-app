@@ -5,6 +5,9 @@ pipeline {
             args '-v /root/.m2:/root/.m2'
         }
     }
+    tools {
+        maven 'mvn-3.5.2'
+    }
     environment {
         DOCKER_IMAGE_TAG = "my-app-challenge:build-${env.BUILD_ID}"
     }
@@ -13,6 +16,12 @@ pipeline {
             steps {
                 sh 'mvn -B -DskipTests clean package'
                 echo "Build docker image"
+            }
+        }
+        stage('Make Container') {
+            steps {
+                sh "docker build -t snscaimito/ledger-service:${env.BUILD_ID} ."
+                sh "docker tag snscaimito/ledger-service:${env.BUILD_ID} snscaimito/ledger-service:latest"
             }
         }
         stage('Test') {
