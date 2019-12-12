@@ -13,10 +13,6 @@ pipeline {
             steps {
                 sh 'mvn -B -DskipTests clean package'
                 echo "Build docker image"
-                script {
-                    dockerImage = docker.build("${env.DOCKER_IMAGE_TAG}",  '-f ./Dockerfile .')
-                    pipelineContext.dockerImage = dockerImage
-                }
             }
         }
         stage('Test') {
